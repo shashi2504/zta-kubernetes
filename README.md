@@ -51,45 +51,8 @@ scaling, and deployment rollouts — with automatic remediation.
 ---
 
 ## Architecture
-┌─────────────────────────────────────────────────────┐
-│                 Kubernetes Cluster                  │
-│                                                     │
-│  ┌────────────────────────────┐                     │
-│  │      Admission Layer       │                     │
-│  │        (Kyverno)           │                     │
-│  │                            │                     │
-│  │  • Registry validation     │                     │
-│  │  • Resource limits         │                     │
-│  │  • Privileged access block │                     │
-│  │  • ZTA label enforcement   │                     │
-│  └────────────┬───────────────┘                     │
-│               │                                     │
-│               ▼                                     │
-│  ┌────────────────────────────┐                     │
-│  │       zta-workloads        │                     │
-│  │                            │                     │
-│  │  • backend-api             │                     │
-│  │  • frontend-web            │                     │
-│  └────────────┬───────────────┘                     │
-│               │                                     │
-│               ▼                                     │
-│  ┌───────────────────────────────────────────────┐  │
-│  │           zta-system namespace                │  │
-│  │                                               │  │
-│  │  ┌────────────────────────────┐               │  │
-│  │  │   ZTA Attestation Engine   │               │  │
-│  │  │                            │               │  │
-│  │  │  • Watches cluster events  │               │  │
-│  │  │  • Re-verifies workloads   │               │  │
-│  │  │  • Terminates violations   │               │  │
-│  │  │  • Maintains audit logs    │               │  │
-│  │  └────────────┬───────────────┘               │  │
-│  │               │                               │  │
-│  │  ┌────────────────────────────┐               │  │
-│  │  │     Policy ConfigMap       │               │  │
-│  │  └────────────────────────────┘               │  │
-│  └───────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
+
+![ZTA Kubernetes Architecture](docs/figures/architecture.png)
 
 ---
 

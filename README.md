@@ -52,8 +52,6 @@ scaling, and deployment rollouts — with automatic remediation.
 
 ## Architecture
 
-<h2 align="center">Architecture</h2>
-
 <p align="center">
   <img src="docs/figures/Architecture.png" alt="ZTA Kubernetes Architecture" width="800"/>
 </p>

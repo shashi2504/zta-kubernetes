@@ -70,4 +70,3 @@ Ensure ClusterRole has configmaps permission:
 ```bash
 kubectl get clusterrole zta-controller-role -o yaml | grep configmaps
 ```
-EOF

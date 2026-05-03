@@ -100,21 +100,25 @@ scaling, and deployment rollouts — with automatic remediation.
 │   ├── policy-require-limits.yaml
 │   ├── policy-disallow-privileged.yaml
 │   └── policy-require-zta-label.yaml
+│
 ├── engine/                      # Core attestation engine
 │   ├── zta_engine.py            # Production in-cluster engine
 │   ├── zta_controller.py        # Standalone controller (dev)
 │   ├── Dockerfile
 │   └── requirements.txt
+│
 ├── manifests/                   # Kubernetes manifests
 │   ├── zta-rbac.yaml            # ServiceAccount + ClusterRole
 │   ├── zta-config.yaml          # Policy ConfigMap
 │   ├── zta-engine-deployment.yaml
 │   └── sample-app.yaml          # Test workloads
+│
 ├── evaluation/                  # Results and metrics
 │   ├── metrics_collector.py
 │   ├── metrics_collector_v2.py
 │   ├── final-audit.log
 │   └── RESULTS_SUMMARY.md
+│
 ├── docs/                        # Documentation
 │   ├── SETUP.md
 │   ├── ARCHITECTURE.md

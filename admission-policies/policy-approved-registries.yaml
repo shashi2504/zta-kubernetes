@@ -1,0 +1,27 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-approved-registries
+  annotations:
+    policies.kyverno.io/title: Require Approved Registries
+    policies.kyverno.io/description: >
+      Blocks pods that use images from unapproved registries.
+      Only docker.io, registry.k8s.io, and gcr.io are trusted.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: check-image-registry
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - zta-workloads
+      validate:
+        message: "Image must be from an approved registry: docker.io, registry.k8s.io, or gcr.io"
+        pattern:
+          spec:
+            containers:
+              - image: "docker.io/* | registry.k8s.io/* | gcr.io/* | hashicorp/* | nginx*"

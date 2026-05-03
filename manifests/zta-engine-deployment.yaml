@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zta-attestation-engine
+  namespace: zta-system
+  labels:
+    app: zta-attestation-engine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zta-attestation-engine
+  template:
+    metadata:
+      labels:
+        app: zta-attestation-engine
+    spec:
+      serviceAccountName: zta-controller
+      containers:
+        - name: zta-engine
+          image: zta-engine:v1.0
+          imagePullPolicy: Never
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+          volumeMounts:
+            - name: audit-log
+              mountPath: /var/log/zta
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+      volumes:
+        - name: audit-log
+          emptyDir: {}
+      restartPolicy: Always

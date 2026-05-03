@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zta-policy-config
+  namespace: zta-system
+data:
+  approved_registries: "docker.io,nginx,hashicorp,registry.k8s.io,gcr.io"
+  restart_threshold: "10"
+  watched_namespace: "zta-workloads"
+  zta_label_key: "zta-monitored"
+  zta_label_value: "true"
+  log_file_path: "/var/log/zta/audit.log"

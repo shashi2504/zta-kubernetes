@@ -1,0 +1,28 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-zta-label
+  annotations:
+    policies.kyverno.io/title: Require ZTA Monitored Label
+    policies.kyverno.io/description: >
+      All pods in zta-workloads must carry the zta-monitored=true label.
+      This label is required for continuous attestation tracking by the
+      ZTA Runtime Controller.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: check-zta-label
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - zta-workloads
+      validate:
+        message: "Pod must have label 'zta-monitored: true' to be admitted into zta-workloads"
+        pattern:
+          metadata:
+            labels:
+              zta-monitored: "true"

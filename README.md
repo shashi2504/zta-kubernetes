@@ -52,26 +52,43 @@ scaling, and deployment rollouts — with automatic remediation.
 
 ## Architecture
 ┌─────────────────────────────────────────────────────┐
-│                   Kubernetes Cluster                │
+│                 Kubernetes Cluster                  │
 │                                                     │
-│  ┌─────────────────┐    ┌───────────────────────┐   │
-│  │  Admission Layer│    │   zta-system namespace│   │
-│  │   (Kyverno)     │    │                       │   │
-│  │                 │    │  ┌─────────────────┐  │   │
-│  │ • Registry check│    │  │  ZTA Attestation│  │   │
-│  │ • Resource limits│   │  │     Engine      │  │   │
-│  │ • No privileged │    │  │                 │  │   │
-│  │ • ZTA label     │    │  │ • Watches events│  │   │
-│  └────────┬────────┘    │  │ • Re-verifies   │  │   │
-│           │             │  │ • Terminates    │  │   │
-│           ▼             │  │ • Audit logs    │  │   │
-│  ┌─────────────────┐    │  └────────┬────────┘  │   │
-│  │ zta-workloads   │◄───┼───────────┘           │   │
-│  │                 │    │                       │   │
-│  │ • backend-api   │    │  ┌─────────────────┐  │   │
-│  │ • frontend-web  │    │  │ Policy ConfigMap│  │   │
-│  └─────────────────┘    │  └─────────────────┘  │   │
-│                         └───────────────────────┘   │
+│  ┌────────────────────────────┐                     │
+│  │      Admission Layer       │                     │
+│  │        (Kyverno)           │                     │
+│  │                            │                     │
+│  │  • Registry validation     │                     │
+│  │  • Resource limits         │                     │
+│  │  • Privileged access block │                     │
+│  │  • ZTA label enforcement   │                     │
+│  └────────────┬───────────────┘                     │
+│               │                                     │
+│               ▼                                     │
+│  ┌────────────────────────────┐                     │
+│  │       zta-workloads        │                     │
+│  │                            │                     │
+│  │  • backend-api             │                     │
+│  │  • frontend-web            │                     │
+│  └────────────┬───────────────┘                     │
+│               │                                     │
+│               ▼                                     │
+│  ┌───────────────────────────────────────────────┐  │
+│  │           zta-system namespace                │  │
+│  │                                               │  │
+│  │  ┌────────────────────────────┐               │  │
+│  │  │   ZTA Attestation Engine   │               │  │
+│  │  │                            │               │  │
+│  │  │  • Watches cluster events  │               │  │
+│  │  │  • Re-verifies workloads   │               │  │
+│  │  │  • Terminates violations   │               │  │
+│  │  │  • Maintains audit logs    │               │  │
+│  │  └────────────┬───────────────┘               │  │
+│  │               │                               │  │
+│  │  ┌────────────────────────────┐               │  │
+│  │  │     Policy ConfigMap       │               │  │
+│  │  └────────────────────────────┘               │  │
+│  └───────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────┘
 
 ---

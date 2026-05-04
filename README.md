@@ -59,7 +59,7 @@ scaling, and deployment rollouts — with automatic remediation.
 ---
 
 ## Project Structure
-.
+```bash
 ├── admission-policies/          # Kyverno admission policies
 │   ├── policy-approved-registries.yaml
 │   ├── policy-require-limits.yaml
@@ -88,7 +88,7 @@ scaling, and deployment rollouts — with automatic remediation.
 │   ├── SETUP.md
 │   ├── ARCHITECTURE.md
 │   └── figures/
-
+```
 ---
 
 ## Quick Start

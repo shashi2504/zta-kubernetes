@@ -7,8 +7,7 @@
 ![Status](https://img.shields.io/badge/status-research%20prototype-orange)
 
 > A research prototype implementing Continuous Zero Trust Architecture (ZTA)
-> for dynamic Kubernetes workloads. Submitted for consideration at
-> IEEE Transactions on Industrial Informatics (IEEE TII).
+> for dynamic Kubernetes workloads.
 
 ---
 
